@@ -939,7 +939,7 @@ class ScanSaveMem(gof.Optimizer):
                                         node.outputs[odx].clients])]
             # 3.4. Recompute inputs for everything else based on the new
             # number of steps
-            if global_nsteps is not None:
+            if global_nsteps is not None and False:
                 for idx, val in enumerate(store_steps[op.n_mit_mot:]):
                     if val == 0:
                         if idx < op.n_mit_sot + op.n_sit_sot:
@@ -1685,8 +1685,8 @@ scan_seqopt1 = theano.gof.SequenceDB()
 scan_eqopt2 = theano.gof.EquilibriumDB()
 # We run before blas opt at 1.7 and specialize 2.0
 # but after stabilize at 1.5. Should we put it before stabilize?
-optdb.register('scan_eqopt1', scan_eqopt1, .1, 'fast_run', 'scan')
-optdb.register('scan_eqopt2', scan_eqopt2, 1.6, 'fast_run', 'scan')
+#optdb.register('scan_eqopt1', scan_eqopt1, .1, 'fast_run', 'scan')
+#optdb.register('scan_eqopt2', scan_eqopt2, 1.6, 'fast_run', 'scan')
 optdb.register('scanOp_make_inplace',
                ScanInplaceOptimizer(typeConstructor=None,
                                     gpu_flag=False),
@@ -1715,11 +1715,11 @@ scan_seqopt1.register('scanOp_pushout_nonseqs_ops',
                       'scan')
 
 
-scan_seqopt1.register('scanOp_pushout_seqs_ops',
-                      PushOutSeqScan(),
-                      3,
-                      'fast_run',
-                      'scan')
+#scan_seqopt1.register('scanOp_pushout_seqs_ops',
+#                      PushOutSeqScan(),
+#                      3,
+#                      'fast_run',
+#                      'scan')
 
 
 scan_seqopt1.register('scan_pushout_dot1',
